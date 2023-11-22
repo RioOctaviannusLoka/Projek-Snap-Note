@@ -170,12 +170,12 @@
     transform:rotate(360deg);
 }
 
-//inactive is used in setting.html and in javascript
+/* inactive is used in setting.html and in javascript */
 .inactive {
   display: none;
 }
 
-//Use in setting.html because when the it goes smaller the margin is too big
+/* Use in setting.html because when the it goes smaller the margin is too big */
 @media only screen and (max-width: 900px) {
   .setting-details {
     margin-left: 250px !important;
