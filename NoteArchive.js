@@ -17,7 +17,6 @@ let titleTag = document.querySelector('.modal-note-title')
 let dateTag = document.querySelector('.modal-note-date')
 let labelTag = document.querySelector('.modal-note-label')
 let contentTag = document.querySelector('.modal-note-content')
-let addBtn = document.querySelector("#addNoteBtn")
 let updateBtn = document.querySelector(".modal-button .btn-success")
 let deleteBtn = document.querySelector(".modal-button .btn-danger")
 let archiveBtn = document.querySelector(".modal-button .btn-primary")
@@ -26,7 +25,7 @@ let archiveBtn = document.querySelector(".modal-button .btn-primary")
 function showNotes(){
     document.querySelectorAll(".note-wrap").forEach(note => note.remove());
     notes.forEach((note, index) => {
-        if(note.archive === false){
+        if(note.archive === true){
             let divTag = `<div class="note-wrap col-6 col-xl-2 col-lg-3 col-md-4 m-3">
                             <div class="note card p-3" onclick="displayNote(${index}, '${note.title}', '${note.date}', '${note.label}', '${note.content}')">
                                 <h5 class="card-title">${note.title}</h5>
@@ -58,28 +57,6 @@ function updateNote(noteId, title, date, label, content, isArchived){
     showNotes();
 }
 
-//membuat event ketika add note diklik
-addBtn.addEventListener("click", e => {
-    // e.preventDefault();
-
-    //deklarasi data dalam note
-    let noteTitle = document.getElementById("floatingInput").value;
-    let noteDate = getCurrentDate();
-    let noteLabel = document.getElementById('floatingLabel').value;
-    let noteContent = document.getElementById('floatingContent').value;
-
-    //title dan content tidak boleh kosong ketika mau add Note
-    if(noteTitle || noteContent){
-        let noteInfo = {
-            title: noteTitle, date: noteDate, label: noteLabel, content:noteContent, archive:false
-        }
-        notes.push(noteInfo); //menambah note baru ke notes
-        //menyimpan notes ke localstorage
-        localStorage.setItem("notes", JSON.stringify(notes));
-    }
-    showNotes();
-});
-
 //membuat event onclick pada update button
 updateBtn.addEventListener("click", () => {
     updateNote(noteIndex, titleTag.value, dateTag.textContent, labelTag.value, contentTag.value, notes[noteIndex].archive)
@@ -97,7 +74,7 @@ deleteBtn.addEventListener("click", () => {
 
 //membuat event onclick pada archive button
 archiveBtn.addEventListener("click", () => {
-    notes[noteIndex].archive = true;
+    notes[noteIndex].archive = false;
     localStorage.setItem("notes", JSON.stringify(notes));
     document.querySelector(".modal-header .btn-close").click();
     showNotes();
