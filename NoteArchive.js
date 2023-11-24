@@ -20,6 +20,10 @@ let contentTag = document.querySelector('.modal-note-content')
 let updateBtn = document.querySelector(".modal-button .btn-success")
 let deleteBtn = document.querySelector(".modal-button .btn-danger")
 let archiveBtn = document.querySelector(".modal-button .btn-primary")
+let sortButton = document.querySelector('.sort');
+let timeSortButton = document.querySelector('.time');
+let alphabetSortButton = document.querySelector('.alphabet');
+let swapButton = document.querySelector('.btn span.material-symbols-outlined');
 
 //Fungsi menampilkan notes
 function showNotes(){
@@ -57,6 +61,61 @@ function updateNote(noteId, title, date, label, content, isArchived){
     showNotes();
 }
 
+// Fungsi untuk mengurutkan berdasarkan waktu
+function sortByTime() {
+    sortButton.textContent = 'Time Created';
+    /* notes.sort((a, b) => {
+        return b.date - a.date;
+    }); */
+    
+    // sort berdasarkan waktu, jika sama maka akan sort berdasarkan alfabet
+    for(i = 1; i < notes.length; i++){
+        for(j = 0; j < notes.length-i; j++){
+            console.log("click");
+            console.log(notes)
+            if(notes[j].date > notes[j+1].date){
+                temp = notes[j];
+                notes[j] = notes[j+1];
+                notes[j+1] = temp;
+            }
+            else if(notes[j].date === notes[j+1].date){
+                if(notes[j].title.toLowerCase() > notes[j+1].title.toLowerCase()){
+                    temp = notes[j];
+                    notes[j] = notes[j+1];
+                    notes[j+1] = temp;
+                }
+            }
+        }
+    }
+    // if (swapButton.classList.contains('reversed')) {
+    //     notes.reverse();
+    // }
+    showNotes();
+}
+
+// Fungsi untuk mengurutkan secara alfabetis
+function sortByAlphabet() {
+    sortButton.textContent = 'Alphabet';
+    notes.sort((a, b) => {
+        let titleA = a.title.toLowerCase();
+        let titleB = b.title.toLowerCase();
+        if (titleA < titleB) return -1;
+        if (titleA > titleB) return 1;
+        return 0;
+    });
+    // if (swapButton.classList.contains('reversed')) {
+    //     notes.reverse();
+    // }
+    showNotes();
+}
+
+
+// Fungsi untuk membalikkan hasil sort
+function reverseSort() {
+    notes.reverse();
+    showNotes();
+}
+
 //membuat event onclick pada update button
 updateBtn.addEventListener("click", () => {
     updateNote(noteIndex, titleTag.value, dateTag.textContent, labelTag.value, contentTag.value, notes[noteIndex].archive)
@@ -79,3 +138,12 @@ archiveBtn.addEventListener("click", () => {
     document.querySelector(".modal-header .btn-close").click();
     showNotes();
 });
+
+// Event Listener untuk tombol sort by Time Created
+timeSortButton.addEventListener('click', sortByTime);
+
+// Event Listener untuk tombol sort by Alphabet
+alphabetSortButton.addEventListener('click', sortByAlphabet);
+
+// Event Listener untuk tombol swap_vert
+swapButton.addEventListener('click', reverseSort);
