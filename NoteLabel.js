@@ -27,7 +27,7 @@ function labelsUpdate(){
     //menyimpan label-label pada notes yang unik
     let labels = [];
     notes.forEach(note => {
-        if(((note.label in labels) === false) && (note.archive === false)){
+        if(((labels.includes(note.label)) === false) && (note.archive === false)){
             labels.push(note.label)
         }
     });
@@ -50,6 +50,7 @@ function labelsUpdate(){
     });
     globalLabel = labels[0];
     document.querySelector(".content .dropdown-toggle").textContent = globalLabel+' ';
+    showNotes();
 }
 labelsUpdate();
 
