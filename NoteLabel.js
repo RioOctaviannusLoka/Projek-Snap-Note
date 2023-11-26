@@ -7,11 +7,22 @@ function getCurrentDate() {
 
     return dd + '-' + mm + '-' + yyyy;
 }
+
+const users = JSON.parse(localStorage.getItem('users')) || [];
+const emailActive = JSON.parse(localStorage.getItem('emailActive'));
+let userIndex, updateId, globalLabel;
+
+for(let i = 0; i < users.length; i++){
+    if(users[i].email === emailActive){
+      userIndex = i;
+    }
+}
+
+let notes = users[userIndex].notes;
+
 //mencari localStorage notes jika ada dan menparse-nya ke js object. 
 //Jika tidak akan menyimoan array kosong ke notes 
-const notes = JSON.parse(localStorage.getItem("notes") || "[]");
-let updateId;
-let globalLabel;
+// const notes = JSON.parse(localStorage.getItem("notes") || "[]");
 
 //mendeklarasi bbrp variabel pendukung
 let titleTag = document.querySelector('.modal-note-title')
@@ -93,7 +104,10 @@ function displayNote(noteId, title, date, label, content){
 function updateNote(noteId, title, date, label, content, isArchived){
     updateId = noteId
     notes[updateId] = {title: title, date: date, label: label, content:content, archive:isArchived}; //updating specified note
-    localStorage.setItem("notes", JSON.stringify(notes));
+    //Menyimpan note yang telah diperbarui ke local storage
+    users[userIndex] = {email: users[userIndex].email, notes: notes, password: users[userIndex].password}
+    localStorage.setItem('users', JSON.stringify(users));
+    // localStorage.setItem("notes", JSON.stringify(notes));
     showNotes();
     labelsUpdate();
 }
@@ -108,7 +122,9 @@ updateBtn.addEventListener("click", () => {
 deleteBtn.addEventListener("click", () => {
     notes.splice(noteIndex, 1); //menghapus note dari array
     //simpan note yang telah terupdate ke localStorage
-    localStorage.setItem("notes", JSON.stringify(notes));
+    users[userIndex] = {email: users[userIndex].email, notes: notes, password: users[userIndex].password}
+    localStorage.setItem('users', JSON.stringify(users));
+    // localStorage.setItem("notes", JSON.stringify(notes));
     document.querySelector(".modal-header .btn-close").click();
     showNotes();
     labelsUpdate();
@@ -117,7 +133,10 @@ deleteBtn.addEventListener("click", () => {
 //membuat event onclick pada archive button
 archiveBtn.addEventListener("click", () => {
     notes[noteIndex].archive = true;
-    localStorage.setItem("notes", JSON.stringify(notes));
+    //simpan note yang telah terupdate ke localStorage
+    users[userIndex] = {email: users[userIndex].email, notes: notes, password: users[userIndex].password}
+    localStorage.setItem('users', JSON.stringify(users));
+    // localStorage.setItem("notes", JSON.stringify(notes));
     document.querySelector(".modal-header .btn-close").click();
     showNotes();
     labelsUpdate();

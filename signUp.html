@@ -220,7 +220,7 @@
         
       if(email && password){
         if(!exist){
-          notes = "[]"
+          notes = []
           users.push({ email, password , notes});
           localStorage.setItem('users', JSON.stringify(users));
           document.querySelector('form').reset();
