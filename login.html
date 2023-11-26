@@ -85,7 +85,7 @@
         backdrop-filter: blur(10px);
       }
       .signUp {
-        color: #02ba15 !important;
+        color: #0d6efd !important;
       }
       .forget {
         font-weight: bold;
@@ -169,25 +169,25 @@
           </button>
         </div>
         <p class="text">OR</p> -->
-        <div class="login-form d-grid gap-2 mt-5">
+        <form class="login-form d-grid gap-2 mt-5" onsubmit="event.preventDefault(); login()">
           <input
             type="email"
             class="form-control"
-            id="exampleInputEmail1"
+            id="emailInput"
             aria-describedby="emailHelp"
-            placeholder="Username"
+            placeholder="Email"
           />
           <input
             type="password"
             class="form-control"
-            id="exampleInputPassword1"
+            id="passwordInput"
             placeholder="Password"
           />
-          <button type="submit" class="btn btn-primary">Login</button>
-        </div>
+          <button type="submit" class="btn btn-success">Login</button>
+        </form>
         <div class="bottomButton d-flex justify-content-end">
           <!-- <a href="#" class="nav-link forgetPassword">Forget password?</a> -->
-          <a href="signUp.html" class="nav-link signUp">Sign up New Account</a>
+          <a href="signUp.html" class="nav-link signUp">Don't Have an Account?</a>
         </div>
       </div>
     </div>
@@ -197,5 +197,44 @@
       integrity="sha384-C6RzsynM9kWDrMNeT87bh95OGNyZPhcTNXj1NW7RuBCsyN/o0jlpcV8Qyq46cDfL"
       crossorigin="anonymous"
     ></script>
+    <script>
+      function login(){
+        // Menerima email dan password yang diinput user
+        let email = document.getElementById("emailInput").value
+        let password = document.getElementById("passwordInput").value
+
+        //mendapatkan data users di localStorage
+        const users = JSON.parse(localStorage.getItem('users')) || [];
+
+        //caritahu apakah email yang dimasukkan ada di localStorage
+        let emailExist = users.find(user => 
+          user.email === email
+        );
+
+        if(email && password){
+          if(emailExist){
+            //caritahu apakah password yang dimasukkan benar
+            let passwordExist = false;
+            if(emailExist.password === password){
+              passwordExist = true
+            }
+  
+            if(passwordExist){
+              //Menambahkan emailActive ke localStorage
+              localStorage.setItem('emailActive', JSON.stringify(email));
+              alert("Email dan password yang anda masukkan benar!!!\n\nSelamat memakai website :)")
+              // Mengarahkan ke login.html
+              window.location.href = 'notes.html';
+            }else{
+              alert("Password yang anda masukkan salah!!!")
+            }
+          }else{
+            alert("Email yang anda masukkan salah atau tidak terdaftar.\n\nSilahkan tekan tombol \"Don't Have an Account\" apabila belum mendaftar akun")
+          }
+        }else{
+          alert("Anda belum memasukkan email dan password!!!")
+        }
+      }
+    </script>
   </body>
 </html>

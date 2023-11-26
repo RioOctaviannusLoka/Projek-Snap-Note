@@ -177,22 +177,22 @@
           </button>
         </div>
         <p class="text">OR</p> -->
-        <div class="login-form d-grid gap-2 mt-5">
+        <form class="signupForm d-grid gap-2 mt-5" onsubmit="event.preventDefault(); signup()">
           <input
             type="email"
             class="form-control"
-            id="exampleInputEmail1"
+            id="emailInput"
             aria-describedby="emailHelp"
-            placeholder="Username"
+            placeholder="Email"
           />
           <input
             type="password"
             class="form-control"
-            id="exampleInputPassword1"
+            id="passwordInput"
             placeholder="Password"
           />
           <button type="submit" class="btn btn-primary">Sign Up</button>
-        </div>
+        </form>
         <div class="bottomButton d-flex justify-content-end">
           <a href="login.html" class="nav-link logIn">Already Have Account?</a>
         </div>
@@ -205,4 +205,36 @@
       crossorigin="anonymous"
     ></script>
   </body>
+  <script>
+    function signup(){
+      // Menerima email dan password yang diinput user
+      let email = document.getElementById('emailInput').value;
+      let password = document.getElementById('passwordInput').value;
+      
+      const users = JSON.parse(localStorage.getItem('users')) || [];
+      //menentukan apakah email sudah pernah ada didalam users
+      let exist = users.length && 
+        JSON.parse(localStorage.getItem('users')).some(user => 
+          user.email.toLowerCase() === email.toLowerCase()
+        );
+        
+      if(email && password){
+        if(!exist){
+          notes = "[]"
+          users.push({ email, password , notes});
+          localStorage.setItem('users', JSON.stringify(users));
+          document.querySelector('form').reset();
+          document.getElementById('emailInput').focus();
+          alert("Sign Up Successful, Account Created. \n\n Please Login with the email and password that you've created");
+          // Mengarahkan ke login.html
+          window.location.href = 'login.html';
+        }
+        else{
+          alert("Ooopppssss... Duplicate found!!!\nYou have already signed up");
+        }
+      }else{
+        alert("Anda belum memasukkan email dan password!!!")
+      }
+    }
+  </script>
 </html>
