@@ -36,6 +36,9 @@ let sortButton = document.querySelector('.sort');
 let timeSortButton = document.querySelector('.time');
 let alphabetSortButton = document.querySelector('.alphabet');
 let swapButton = document.querySelector('.btn span.material-symbols-outlined');
+let UserName = document.querySelector(".UserName")
+let welcome = document.querySelector(".welcome")
+let date = document.querySelector(".date")
 
 //Fungsi menampilkan notes
 function showNotes(){
@@ -167,3 +170,28 @@ alphabetSortButton.addEventListener('click', sortByAlphabet);
 
 // Event Listener untuk tombol swap_vert
 swapButton.addEventListener('click', reverseSort);
+
+//fungsi untuk mendapatkan tanggal dan hari sekarang
+function getCurrentDateAndDay() {
+    const days = ['Sunday', 'Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday'];
+    const months = [
+      'January', 'February', 'March', 'April', 'May', 'June',
+      'July', 'August', 'September', 'October', 'November', 'December'
+    ];
+  
+    const now = new Date();
+    const dayOfWeek = days[now.getDay()];
+    const month = months[now.getMonth()];
+  
+    const date = now.getDate();
+    const year = now.getFullYear();
+  
+    return `${dayOfWeek}, ${date} ${month} ${year}`;
+  }
+
+//mengubah content document sesuai info user
+document.addEventListener('DOMContentLoaded', function() {
+    UserName.textContent = emailActive.split('@')[0].charAt(0).toUpperCase()+emailActive.split('@')[0].slice(1);
+    welcome.textContent = 'Welcome to Archive, '+emailActive.split('@')[0].charAt(0).toUpperCase()+emailActive.split('@')[0].slice(1)+'!';
+    date.textContent = getCurrentDateAndDay();
+});

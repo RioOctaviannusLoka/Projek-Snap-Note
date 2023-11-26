@@ -46,8 +46,8 @@ let emailExist = users.find(user =>
 
 //mengubah content document sesuai info user
 document.addEventListener('DOMContentLoaded', function() {
-  UserName.textContent = emailActive.split('@')[0];
-  userName.textContent = emailActive.split('@')[0];
+  UserName.textContent = emailActive.split('@')[0].charAt(0).toUpperCase()+emailActive.split('@')[0].slice(1);
+  userName.textContent = emailActive.split('@')[0].charAt(0).toUpperCase()+emailActive.split('@')[0].slice(1);
   emailUser.textContent = emailActive;
   passwordUser.value = emailExist.password;
 });

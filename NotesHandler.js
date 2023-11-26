@@ -33,6 +33,9 @@ let addBtn = document.querySelector("#addNoteBtn")
 let updateBtn = document.querySelector(".modal-button .btn-success")
 let deleteBtn = document.querySelector(".modal-button .btn-danger")
 let archiveBtn = document.querySelector(".modal-button .btn-primary")
+let UserName = document.querySelector(".UserName")
+let welcome = document.querySelector(".welcome")
+let date = document.querySelector(".date")
 
 //Fungsi menampilkan notes
 function showNotes(){
@@ -123,4 +126,29 @@ archiveBtn.addEventListener("click", () => {
     // localStorage.setItem("notes", JSON.stringify(notes));
     document.querySelector(".modal-header .btn-close").click();
     showNotes();
+});
+
+//fungsi untuk mendapatkan tanggal dan hari sekarang
+function getCurrentDateAndDay() {
+    const days = ['Sunday', 'Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday'];
+    const months = [
+      'January', 'February', 'March', 'April', 'May', 'June',
+      'July', 'August', 'September', 'October', 'November', 'December'
+    ];
+  
+    const now = new Date();
+    const dayOfWeek = days[now.getDay()];
+    const month = months[now.getMonth()];
+  
+    const date = now.getDate();
+    const year = now.getFullYear();
+  
+    return `${dayOfWeek}, ${date} ${month} ${year}`;
+  }
+
+//mengubah content document sesuai info user
+document.addEventListener('DOMContentLoaded', function() {
+    UserName.textContent = emailActive.split('@')[0].charAt(0).toUpperCase()+emailActive.split('@')[0].slice(1);
+    welcome.textContent = 'Welcome Back, '+emailActive.split('@')[0].charAt(0).toUpperCase()+emailActive.split('@')[0].slice(1)+'!';
+    date.textContent = getCurrentDateAndDay();
 });
