@@ -89,8 +89,6 @@ function sortByTime() {
     // sort berdasarkan waktu, jika sama maka akan sort berdasarkan alfabet
     for(i = 1; i < notes.length; i++){
         for(j = 0; j < notes.length-i; j++){
-            console.log("click");
-            console.log(notes)
             if(notes[j].date > notes[j+1].date){
                 temp = notes[j];
                 notes[j] = notes[j+1];
