@@ -61,4 +61,5 @@ for(let i = 0; i < users.length; i++){
 changePwBtn.addEventListener('click', () =>{
   users[userIndex] = {email: users[userIndex].email, notes: users[userIndex].notes, password: passwordUser.value}
   localStorage.setItem('users', JSON.stringify(users));
+  alert("Password berhasil diganti!!!")
 });
